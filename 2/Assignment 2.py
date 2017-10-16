@@ -4,6 +4,18 @@ import random
 
 #need it to be 2/3rds of the time moving forward
 #random.randint(range)
+def forward():
+    """makes alex move forward 30 pixels"""
+    alex.fd(30)
+def turn_left():
+    """makes alex turn 45 degrees left"""
+    alex.lt(45)
+def turn_right():
+    """makes alex turn 45 degrees right"""
+    alex.rt(45)
+def Backward():
+    """makes alex move backward 30 pixels"""
+    alex.fd(-30)
 
 def user_move():
     """Function for defining what should happen during the players move"""
@@ -23,23 +35,14 @@ def user_move():
         # if dir == 'd' or 'D':
         #     alex.rt(45)
         #     op = 1
-        def forward():
-            alex.fd(30)
-        def turn_left():
-            alex.lt(45)
-        def turn_right():
-            alex.rt(45)
-        def Backward():
-            alex.fd(-30)
+        
         #setting up the listner
         qq.onkey(forward,"w")
         qq.onkey(turn_left,"a")
         qq.onkey(turn_right,"d")
         qq.onkey(Backward,"s")
         qq.listen()
-
-
-        else:
+    else:
             print('invalid input')
             op=0
 
