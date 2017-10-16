@@ -6,9 +6,10 @@ import random
 #random.randint(range)
 
 def user_move():
-    alex = turtle.Turtle()
+    """Function for defining what should happen during the players move"""
     op = 0
     while op < 1:
+        #old useless code unless you can prompt by string inputs
         # dir = input('prompt')
         # if dir == 'w'or 'W':
         #     alex.fd(5)
@@ -30,6 +31,7 @@ def user_move():
             alex.rt(45)
         def Backward():
             alex.fd(-30)
+        #setting up the listner
         qq.onkey(forward,"w")
         qq.onkey(turn_left,"a")
         qq.onkey(turn_right,"d")
@@ -51,6 +53,7 @@ def Alice_move():
     pass
 
 def Take_Turns():
+    """The function that calls each players turns to take place while the game hasn't been won"""
     while win_condition()==False:
         user_move()
         Alice_move()
@@ -61,6 +64,7 @@ print(random.uniform(1,2))
 
 def main():
     qq = turtle.Screen() #makes it so I don't have to type out turtle.screen()
+    alex = turtle.Turtle() #defining the turtle in here makes it so Take_turns can't see and in turn user_move cant see the turtle
     Take_Turns()
     qq.mainloop()
 
