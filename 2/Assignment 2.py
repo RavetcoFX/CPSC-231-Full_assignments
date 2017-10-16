@@ -16,8 +16,11 @@ def turn_right():
 def Backward():
     """makes alex move backward 30 pixels"""
     alex.fd(-30)
-
-def user_move():
+def init_alex():
+    """defining the turtle in here hopefully will make it so Take_turns can see alex and in turn user_move cant see the turtle"""
+    alex = turtle.Turtle()
+    return alex
+def user_move(alex):
     """Function for defining what should happen during the players move"""
     op = 0
     while op < 1:
@@ -55,10 +58,10 @@ def Alice_move():
     """This will be the function that executes alices move after the player"""
     pass
 
-def Take_Turns():
+def Take_Turns(alex):
     """The function that calls each players turns to take place while the game hasn't been won"""
     while win_condition()==False:
-        user_move()
+        user_move(alex)
         Alice_move()
 
 #random number generation
@@ -67,8 +70,7 @@ print(random.uniform(1,2))
 
 def main():
     qq = turtle.Screen() #makes it so I don't have to type out turtle.screen()
-    alex = turtle.Turtle() #defining the turtle in here makes it so Take_turns can't see and in turn user_move cant see the turtle
-    Take_Turns()
+    Take_Turns(init_alex())
     qq.mainloop()
 
 
