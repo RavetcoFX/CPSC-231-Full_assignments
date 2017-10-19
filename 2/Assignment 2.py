@@ -49,17 +49,9 @@ def user_move(alex):
             alex.rt(45)
             op = 1
             print('right')
-        
-        #setting up the listner
-        #turtle.Screen().onkey(forward,"w")
-        #turtle.Screen().onkey(turn_left,"a")
-        #turtle.Screen().onkey(turn_right,"d")
-        #turtle.Screen().onkey(Backward,"s")
-        #turtle.Screen().listen()
         if op == 0:
             op=0
             print('invalid input')
-            return None
 
 def win_condition():
     """this will be the function that decides if the game is over"""
