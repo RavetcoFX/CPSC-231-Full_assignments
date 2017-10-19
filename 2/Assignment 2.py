@@ -1,12 +1,8 @@
-import tkinter as tk
 import turtle
 import random
 
 
 
-
-#need it to be 2/3rds of the time moving forward
-#random.randint(range)
 def forward():
     """makes alex move forward 30 pixels"""
     alex.fd(30)
@@ -27,6 +23,9 @@ def init_alice():
     """defining the turtle in here hopefully will make it so Take_turns can see alice and in turn alice_move cant see the turtle"""
     alice = turtle.Turtle()
     return alice
+def use_turtles(alex,alice):
+    """Need a function that calls alex without initializing each other every time"""
+    return (alex,alice)
 def user_move(alex):
     """Function for defining what should happen during the players move"""
     op = 0
@@ -52,6 +51,15 @@ def user_move(alex):
         if op == 0:
             op=0
             print('invalid input')
+def startpoint(alex,alice):
+    alex.up()
+    alex.setpos((random.randint(0,500)),(random.randint(0,500)))
+    alex.down()
+    alice.up()
+    alice.setpos((random.randint(0,500)),(random.randint(0,500)))
+    alice.down()
+    alex, alice = use_turtles(alex,alice)
+    return alex,alice
 
 def win_condition():
     """this will be the function that decides if the game is over"""
@@ -70,16 +78,18 @@ def Alice_move(alice):
         alice.fd(30)
     pass
 
-def Take_Turns(alex,alice):
+def Take_Turns(turtles):
     """The function that calls each players turns to take place while the game hasn't been won"""
     while win_condition()==False:
+        alex, alice = turtles
         user_move(alex)
         Alice_move(alice)
 
 
 def main():
     qq = turtle.Screen() #makes it so I don't have to type out turtle.screen()
-    Take_Turns(init_alex(), init_alice())
+    #startpoint(init_alex(), init_alice())
+    Take_Turns(use_turtles(startpoint(init_alex(), init_alice())))
     qq.mainloop()
 
 
