@@ -33,23 +33,22 @@ def user_move(alex):
     while op == 0:
         #old useless code unless you can prompt by string inputs, just using for debugging
         dir = input('prompt:')
-        if dir == ('w') or ('W'):
+        if (('w') or ('W')) in dir:
             alex.fd(30)
             op = 1
             print('forward')
-            pass
-        #if dir == ('s') or ('S'):
-        #    alex.fd(-30)
-        #    op = 1
-        #    print('backward')
-        #if dir == ('a') or ('A'):
-        #    alex.lt(45)
-        #    op = 1
-        #    print('left')
-        #if dir == ('d') or ('D'):
-        #    alex.rt(45)
-        #    op = 1
-        #    print('right')
+        if (('s') or ('S')) in dir:
+            alex.fd(-30)
+            op = 1
+            print('backward')
+        if (('a') or ('A')) in dir:
+            alex.lt(45)
+            op = 1
+            print('left')
+        if (('d') or ('D')) in dir:
+            alex.rt(45)
+            op = 1
+            print('right')
         
         #setting up the listner
         #turtle.Screen().onkey(forward,"w")
@@ -57,10 +56,10 @@ def user_move(alex):
         #turtle.Screen().onkey(turn_right,"d")
         #turtle.Screen().onkey(Backward,"s")
         #turtle.Screen().listen()
-    else:
-            print('invalid input')
+        if op == 0:
             op=0
-    return None
+            print('invalid input')
+            return None
 
 def win_condition():
     """this will be the function that decides if the game is over"""
@@ -84,8 +83,6 @@ def Take_Turns(alex,alice):
     while win_condition()==False:
         user_move(alex)
         Alice_move(alice)
-
-#random number generation
 
 
 def main():
