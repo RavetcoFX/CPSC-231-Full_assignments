@@ -18,13 +18,21 @@ def Backward():
 def init_alex():
     """defining the turtle in here hopefully will make it so Take_turns can see alex and in turn user_move cant see the turtle"""
     alex = turtle.Turtle()
+    alex.shape("turtle")
+    alex.pencolor('Blue')
+    alex.fillcolor("Blue")
     return alex
 def init_alice():
     """defining the turtle in here hopefully will make it so Take_turns can see alice and in turn alice_move cant see the turtle"""
     alice = turtle.Turtle()
+    alice.shape("turtle")
+    alice.pencolor("Red")
+    alice.fillcolor("Red")
     return alice
 def use_turtles(alex,alice):
     """Need a function that calls alex without initializing each other every time"""
+    alex = alex
+    alice = alice
     return (alex,alice)
 def user_move(alex):
     """Function for defining what should happen during the players move"""
@@ -92,5 +100,8 @@ def main():
     Take_Turns(use_turtles(startpoint(init_alex(), init_alice())))
     qq.mainloop()
 
+#possible solution to tupple issue
+#for item in c:
+#   print(item)
 
 main()
