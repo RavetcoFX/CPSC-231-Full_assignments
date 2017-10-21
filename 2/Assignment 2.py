@@ -33,7 +33,7 @@ def use_turtles(alex,alice):
     """Need a function that calls alex without initializing each other every time"""
     alex = alex
     alice = alice
-    return (alex,alice)
+    return [alex,alice]
 def user_move(alex):
     """Function for defining what should happen during the players move"""
     op = 0
@@ -67,7 +67,7 @@ def startpoint(alex,alice):
     alice.setpos((random.randint(0,500)),(random.randint(0,500)))
     alice.down()
     alex, alice = use_turtles(alex,alice)
-    return alex,alice
+    return [alex,alice]
 
 def win_condition():
     """this will be the function that decides if the game is over"""
