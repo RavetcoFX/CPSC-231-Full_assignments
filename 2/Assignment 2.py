@@ -59,15 +59,16 @@ def user_move(alex):
         if op == 0:
             op=0
             print('invalid input')
-def startpoint(alex,alice):
+def startpoint(turtles):    
+    alex = turtles[0]
+    alice = turtles[1]
     alex.up()
     alex.setpos((random.randint(0,500)),(random.randint(0,500)))
     alex.down()
     alice.up()
     alice.setpos((random.randint(0,500)),(random.randint(0,500)))
     alice.down()
-    alex, alice = use_turtles(alex,alice)
-    return [alex,alice]
+    return turtles
 
 def win_condition():
     """this will be the function that decides if the game is over"""
@@ -89,7 +90,8 @@ def Alice_move(alice):
 def Take_Turns(turtles):
     """The function that calls each players turns to take place while the game hasn't been won"""
     while win_condition()==False:
-        alex, alice = turtles
+        alex= turtles[0]
+        alice= turtles[1]
         user_move(alex)
         Alice_move(alice)
 
@@ -97,7 +99,7 @@ def Take_Turns(turtles):
 def main():
     qq = turtle.Screen() #makes it so I don't have to type out turtle.screen()
     #startpoint(init_alex(), init_alice())
-    Take_Turns(use_turtles(startpoint(init_alex(), init_alice())))
+    Take_Turns(startpoint(use_turtles(init_alex(), init_alice())))
     qq.mainloop()
 
 #possible solution to tupple issue
