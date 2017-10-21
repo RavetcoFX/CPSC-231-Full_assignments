@@ -30,12 +30,12 @@ def init_alice():
     alice.fillcolor("Red")
     return alice
 def use_turtles(alex,alice):
-    """Need a function that calls alex without initializing each other every time"""
+    """A function that allows you to call each turtle without recreating the turtle each time"""
     alex = alex
     alice = alice
     return [alex,alice]
 def user_move(alex):
-    """Function for defining what should happen during the players move"""
+    """Function for defining what should happen during the players (alex's) move"""
     op = 0
     while op == 0:
         #old useless code unless you can prompt by string inputs, just using for debugging
@@ -59,7 +59,8 @@ def user_move(alex):
         if op == 0:
             op=0
             print('invalid input')
-def startpoint(turtles):    
+def startpoint(turtles):
+    """Function that carries out the movement of each turtle to a random location in the canvas at the start of each game"""
     alex = turtles[0]
     alice = turtles[1]
     alex.up()
@@ -71,7 +72,7 @@ def startpoint(turtles):
     return turtles
 
 def win_condition():
-    """this will be the function that decides if the game is over"""
+    """the function that decides if the game is over; if alex and alice are within 30 pixels of each other"""
     return False
     #need an if statement for alice and alex within 30 pixels
 
@@ -102,8 +103,5 @@ def main():
     Take_Turns(startpoint(use_turtles(init_alex(), init_alice())))
     qq.mainloop()
 
-#possible solution to tupple issue
-#for item in c:
-#   print(item)
 
 main()
