@@ -2,19 +2,6 @@ import turtle
 import random
 
 
-
-def forward():
-    """makes alex move forward 30 pixels"""
-    alex.fd(30)
-def turn_left():
-    """makes alex turn 45 degrees left"""
-    alex.lt(45)
-def turn_right():
-    """makes alex turn 45 degrees right"""
-    alex.rt(45)
-def Backward():
-    """makes alex move backward 30 pixels"""
-    alex.fd(-30)
 def init_alex():
     """defining the turtle in here hopefully will make it so Take_turns can see alex and in turn user_move cant see the turtle"""
     alex = turtle.Turtle()
@@ -34,7 +21,7 @@ def use_turtles(alex,alice):
     alex = alex
     alice = alice
     return [alex,alice]
-def user_move(alex):
+def user_move(alex, alice):
     """Function for defining what should happen during the players (alex's) move"""
     op = 0
     while op == 0:
@@ -56,9 +43,15 @@ def user_move(alex):
             alex.rt(45)
             op = 1
             print('right')
+        if ('cheat') in dir:
+            Alice_move(alice, True, alex.pos())
+            op = 2
+            print('cheater')
         if op == 0:
             op=0
             print('invalid input')
+        if op == 2:
+            pass
 def startpoint(turtles):
     """Function that carries out the movement of each turtle to a random location in the canvas at the start of each game"""
     alex = turtles[0]
@@ -71,15 +64,12 @@ def startpoint(turtles):
     alice.down()
     return turtles
 
-def win_condition():
-    """the function that decides if the game is over; if alex and alice are within 30 pixels of each other"""
-    return False
-    #need an if statement for alice and alex within 30 pixels
-
-def Alice_move(alice):
+def Alice_move(alice, cheat, other_pos):
     """This will be the function that executes alices move after the player"""
     numb = (random.uniform(1,6))//1
-    print(numb)
+    if cheat:
+        alice.setposition((other_pos[0])//1,(other_pos[1])//1)
+        pass
     if numb == 1:
         alice.lt(45)
     if numb==2:
@@ -90,11 +80,18 @@ def Alice_move(alice):
 
 def Take_Turns(turtles):
     """The function that calls each players turns to take place while the game hasn't been won"""
-    while win_condition()==False:
+    win = False
+    while not win:
         alex= turtles[0]
         alice= turtles[1]
-        user_move(alex)
-        Alice_move(alice)
+        user_move(alex, alice)
+        Alice_move(alice, False, None)
+        if ((alex.distance(alice,alice)) // 1) < 100:
+            win = True
+            print("you win") #Maybe print to the window later
+            turtle.clearscreen()
+            main()
+            
 
 
 def main():
