@@ -2,6 +2,14 @@ import turtle
 import random
 import time
 
+
+def init_jeff():
+    """Turtle that will handle writing text for the distance between alice and alice"""
+    jeff = turtle.Turtle()
+    jeff.up()
+    jeff.hideturtle()
+    jeff.setpos(-240,220)
+    return jeff
     
 def init_alex():
     """defining the turtle in here hopefully will make it so Take_turns can see alex and in turn user_move cant see the turtle"""
@@ -79,26 +87,25 @@ def Alice_move(alice, alex):
     if numb==2:
         alice.rt(45)
     else:
-        alice.fd(30)
+        alice.fd(20)
     pass
 
 def Take_Turns(turtles):
     """The function that calls each players turns to take place while the game hasn't been won"""
-    jeff = turtle.Turtle()
-    jeff.up()
-    jeff.hideturtle()
-    jeff.setpos(-240,220)
-    
     win = False
+    each_turn_count = 0
     alex= turtles[0]
     alice= turtles[1]
-    jeff.write(('The Distance: ', ((alex.distance(alice,alice)) // 1)), True, align="left")
     while not win:
+        each_turn_count += 1
+        jeff = init_jeff()
+        jeff.write(('Step #%i - The Distance: %i' % (each_turn_count, ((alex.distance(alice,alice))) // 1)), False, align="left")
         user_move(alex, alice)
         Alice_move(alice, alex)
         jeff.clear()
-        jeff.write(('The Distance: ', ((alex.distance(alice,alice)) // 1)), True, align="left")
-        if ((alex.distance(alice,alice)) // 1) < 100:
+        jeff.write(('The Distance: ', ((alex.distance(alice,alice)) // 1)), False, align="left")
+        jeff.clear()
+        if ((alex.distance(alice,alice)) // 1) < 30:
             win = True
             jeff.clear()
             jeff.write("You Win")
