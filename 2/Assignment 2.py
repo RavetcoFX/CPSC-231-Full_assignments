@@ -56,28 +56,28 @@ def user_move(alex, alice):
     """Function for defining what should happen during the players (alex's) move; needs both alex and alice as an input argument"""
     Alex_Forward_by = 30 # The amount of pixels alex should move forward by
     Alex_Turn_by = 45 #The angle, in degrees that Alex should turn in a direction by
-    op = 0 #arbitrary variable to handle invalid inputs
-    while op == 0:
+    is_invalid_input = 0 #arbitrary variable to handle invalid inputs
+    while is_invalid_input == 0:
         direction = input('prompt:')
         if (('w') or ('W')) is direction:
             alex.fd(Alex_Forward_by)
-            op = 1
+            is_invalid_input = 1
             print('forward')
         if (('a') or ('A')) is direction:
             alex.lt(Alex_Turn_by)
-            op = 1
+            is_invalid_input = 1
             print('left')
         if (('d') or ('D')) is direction:
             alex.rt(Alex_Turn_by)
-            op = 1
+            is_invalid_input = 1
             print('right')
         #Code for automatically winning the round; used to test win condition
        # if ('cheat') in direction:
         #    alex.setpos(alice.pos())
          #   print('cheater')
-          #  op = 1
-        if op == 0:
-            op=0
+          #  is_invalid_input = 1
+        if is_invalid_input == 0:
+            is_invalid_input=0
             print('invalid input')
 
 def Fix_Offscreen(name):
