@@ -58,19 +58,19 @@ def user_move(alex, alice):
     Alex_Turn_by = 45 #The angle, in degrees that Alex should turn in a direction by
     is_invalid_input = 0 #arbitrary variable to handle invalid inputs
     while is_invalid_input == 0:
-        direction = input('prompt:')
+        direction = input('Move Alex:') #Takes a string input that then gets checked through all the if statements and performs an action
         if (('w') or ('W')) is direction:
             alex.fd(Alex_Forward_by)
             is_invalid_input = 1
-            print('forward')
+            
         if (('a') or ('A')) is direction:
             alex.lt(Alex_Turn_by)
             is_invalid_input = 1
-            print('left')
+            
         if (('d') or ('D')) is direction:
             alex.rt(Alex_Turn_by)
             is_invalid_input = 1
-            print('right')
+            
         #Code for automatically winning the round; used to test win condition
        # if ('cheat') in direction:
         #    alex.setpos(alice.pos())
@@ -78,7 +78,7 @@ def user_move(alex, alice):
           #  is_invalid_input = 1
         if is_invalid_input == 0:
             is_invalid_input=0
-            print('invalid input')
+            print('invalid input please input one of these values \nw= forward \na= left turn \nd = right turn')
 
 def Fix_Offscreen(name):
     """Function for handling (in a way similar to pacman) if the turtles move out of the canvas (off screen); the only argument passed is the name of the turtle"""
@@ -116,7 +116,7 @@ def Alice_move(alice, alex):
     """This will be the function that executes alices move after the player"""
     Alice_Forward_by = 20 # The amount of pixels alice should move forward by
     Alice_Turn_by = 90 #The angle, in degrees that Alice should turn in a direction by
-    numb = (random.uniform(1,6))//1) #Does the random number generation that determines Alice's turn
+    numb = (random.uniform(1,6))//1 #Does the random number generation that determines Alice's turn
     if alex.pos() == alice.pos():
         pass
     if numb == 1:
@@ -126,19 +126,13 @@ def Alice_move(alice, alex):
     else:
         alice.fd(Alice_Forward_by)
     pass
-    
-    
 
-def Game_loop(turtles):
-    """The function that calls each players turns to take place while the game hasn't been won"""
-    alex= turtles[0]
-    alice= turtles[1]
-    win = False
-    jeff = init_jeff()
-    each_turn_count = 0
+def win_condition(alex, alice, jeff, each_turn_count):
+    """Handles determining if the game is won or not; if the game is won it will restart the game, if not it will let each turtle take their turn"""
+    win = False #Initially set win to False as long as alex and alice did not spawn within 30 pixels
     while not win: #While the game still hasn't been won each player takes their turn, and jeff presents the games information until the game is won
         each_turn_count += 1 #The value for which turn the game is on; used by jeff to present this information to the player
-        jeff.write(('Step #%i - The distance between Alex and Alice is: %i' % (each_turn_count, ((alex.distance(alice,alice))) // 1)), False, align="left")
+        jeff.write(('Step #%i - The distance between Alex and Alice is: %i' % (each_turn_count, ((alex.distance(alice,alice))) // 1)), False, align="left") #Jeff will write the turn/step# + the distance between the turtles each turn
         user_move(alex, alice) #Alex takes his turn
         Fix_Offscreen(alex) #checks to make sure Alex is not outside the boundary; if he is then fix it
         Alice_move(alice, alex) #Alice takes her turn
@@ -152,6 +146,14 @@ def Game_loop(turtles):
             time.sleep(3)
             turtle.clearscreen()
             main()
+
+def Game_loop(turtles):
+    """The function that brings in all the turtles after their setup stages, sets the turn count to 0, then calls the win_condition funciton"""
+    alex= turtles[0]
+    alice= turtles[1]
+    jeff = init_jeff()
+    each_turn_count = 0
+    win_condition(alex, alice, jeff, each_turn_count)
     
 
 def main():
