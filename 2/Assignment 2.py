@@ -6,8 +6,8 @@ import time
 def init_jeff():
     """Turtle that will handle writing text for the distance between alice and alice"""
     jeff = turtle.Turtle()
-    jeff.up()
     jeff.hideturtle()
+    jeff.up()
     jeff.setpos(-240,220)
     return jeff
     
@@ -36,9 +36,11 @@ def startpoint(turtles, window): #calling window_height_width just window for sa
     alex = turtles[0]
     alice = turtles[1]
     max_limit = ((window//2) - 10) # this was it won't land exactly on the edge or outside the window
+    
     alex.up()
     alex.setpos((random.randint(0,max_limit)),(random.randint(0,max_limit)))
     alex.down()
+    
     alice.up()
     alice.setpos((random.randint(0,max_limit)),(random.randint(0,max_limit)))
     alice.down()
@@ -49,7 +51,6 @@ def user_move(alex, alice):
     """Function for defining what should happen during the players (alex's) move"""
     op = 0
     while op == 0:
-        #old useless code unless you can prompt by string inputs, just using for debugging
         direction = input('prompt:')
         if (('w') or ('W')) is direction:
             alex.fd(30)
@@ -77,6 +78,34 @@ def user_move(alex, alice):
         if op == 2:
             pass
 
+def turtle_looparound(name):
+
+    if name.xcor() <= -250:
+        name.up()
+        name.ht()
+        name.setx(240)
+        name.down()
+        name.st()
+    if name.xcor() >= 250:
+        name.up()
+        name.ht()
+        name.setx(-240)
+        name.down()
+        name.st()
+    if name.ycor() >= 250:
+        name.up()
+        name.ht()
+        name.sety(-240)
+        name.down()
+        name.st()
+    if name.ycor() <= -250:
+        name.up()
+        name.ht()
+        name.sety(240)
+        name.down()
+        name.st()
+
+
 def Alice_move(alice, alex):
     """This will be the function that executes alices move after the player"""
     numb = (random.uniform(1,6))//1
@@ -89,34 +118,39 @@ def Alice_move(alice, alex):
     else:
         alice.fd(20)
     pass
+    
+    
 
-def Take_Turns(turtles):
+def Game_loop(turtles):
     """The function that calls each players turns to take place while the game hasn't been won"""
-    win = False
-    each_turn_count = 0
     alex= turtles[0]
     alice= turtles[1]
+    win = False
+    jeff = init_jeff()
+    each_turn_count = 0
     while not win:
         each_turn_count += 1
-        jeff = init_jeff()
         jeff.write(('Step #%i - The Distance: %i' % (each_turn_count, ((alex.distance(alice,alice))) // 1)), False, align="left")
         user_move(alex, alice)
+        turtle_looparound(alex)
         Alice_move(alice, alex)
+        turtle_looparound(alice)
         jeff.clear()
         jeff.write(('The Distance: ', ((alex.distance(alice,alice)) // 1)), False, align="left")
         jeff.clear()
-        if ((alex.distance(alice,alice)) // 1) < 30:
+        if ((alex.distance(alice,alice)) // 1) < 30 and alex.isdown() and alice.isdown():
             win = True
             jeff.clear()
             jeff.write("You Win")
             time.sleep(3)
             turtle.clearscreen()
             main()
-
+    
 
 def main():
     window_height_width = 500
     turtle.Screen().setup(window_height_width,window_height_width)
-    Take_Turns(startpoint(use_turtles(init_alex(), init_alice()), window_height_width))
+    Game_loop(startpoint(use_turtles(init_alex(), init_alice()), window_height_width))
+    
     
 main()
