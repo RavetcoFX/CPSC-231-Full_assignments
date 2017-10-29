@@ -1,5 +1,7 @@
 #Assignment 3 - A game of nuts - Kieran Wood
 
+import random #The Library that will allow the random number generation needed in the Probability_Selection Function
+
 
 #Setting up the functions that will be used for each case of the game; Player vs Player, Player vs Untrained AI, Player vs Trained AI
 def Set_Up_Initial_Variables():
@@ -32,16 +34,16 @@ def How_Many_Players(Amount_of_Nuts):
             Player_vs_Player(Amount_of_Nuts,Players)
             break
         if Players ==2:
-            print("\nYou have selected to play against an untrianed AI")
-            Untrrained_AI()
+            print("\nYou have selected to play against an untrianed AI")            
+            Untrrained_AI(initHats(Amount_of_Nuts),Amount_of_Nuts)
             selection =1
             break
         if Players == 3:
             print("\nYou have selected to play against a trianed AI, Good Luck Have Fun")
-            Trained_AI()
+            Trained_AI(initHats(Amount_of_Nuts),Amount_of_Nuts)
             selection =1
             break
-        else:
+        else: # had to include this because invalid selections where not being delt with properly
             while ((selection == 0) and (Win == False)):
                 print("\nplease select a valid option:")
                 Players = eval(input("\nPlay against a friend (1) \nPlay against an untrained computer (2) \nPlay against a trained AI (3) \nWhich Option do you take (1-3)?:"))
@@ -52,12 +54,12 @@ def How_Many_Players(Amount_of_Nuts):
                     break
                 if Players ==2:
                     print("\nYou have selected to play against an untrianed AI")
-                    Untrrained_AI()
+                    Untrrained_AI(initHats(Amount_of_Nuts),Amount_of_Nuts)
                     selection =1
                     break
                 if Players == 3:
                     print("\nYou have selected to play against a trianed AI, Good Luck Have Fun")
-                    Trained_AI()
+                    Trained_AI(initHats(Amount_of_Nuts),Amount_of_Nuts)
                     selection =1
                     break
                 else:
@@ -153,34 +155,59 @@ def Player_vs_Player(Amount_of_Nuts,Players):
        
 def initHats(Amount_of_Nuts):
     """will create a list with the same amount of hats as nuts"""
-    hats = []
+    Hats = []
     for i in range(Amount_of_Nuts):
-        hats += [[1,1,1]]
-    print(hats)
-    return hats
+        Hats += [[1,1,1]]
+    print(Hats)
+    return Hats
 
-def Probability_Selection():
+def Probability_Selection(Current_Nuts_Hat):
     """Function for selecting which value to go with based on the probability distribution"""
-    pass
+    # Current_Nuts_Hat is the Hats Value of the current Nut; by default this is [1,1,1]
+    Total_Hat = Current_Nuts_Hat[0] + Current_Nuts_Hat[1] + Current_Nuts_Hat[2]
+    r_int = random.randint(1, Total_Hat)
+    if (r_int <= Current_Nuts_Hat[0]):
+        move = 0
+    elif (r_int <= Current_Nuts_Hat[0] + Current_Nuts_Hat[1]):
+        move = 1
+    else:
+        move = 2
+    Decrement_Hats(Current_Nuts_Hat,move)
+    print(move)
+    print(Current_Nuts_Hat)
+    
+    
+def Decrement_Hats(Current_Nuts_Hat, move, Win = False):
+    """Function that decrements the value selected of the Hat until the game has been won or lost"""
 
-def Untrrained_AI():
+    Moves_Made = [] #Variable that will keep track of the decrements made 
+    Current_Nuts_Hat[move] = Current_Nuts_Hat[move] - 1
+    Moves_Made += Current_Nuts_Hat
+    print(Moves_Made)
+    if Win == True: #If the AI wins
+        for i in range (Moves_Made): #steps through the list of changes made
+            pass
+    return Current_Nuts_Hat[move]
+
+def Untrrained_AI(Hats, Amount_of_Nuts):
     """Function for playing against an untrained AI"""
     print("Hue I suck")
+    Probability_Selection(Hats[Amount_of_Nuts-1])
     pass
 
-def Trained_AI():
+def Trained_AI(Hats, Amount_of_Nuts):
     """Function for playing against a Trained AI"""
     print("Hue I Win")
+    Probability_Selection(Hats[Amount_of_Nuts-1])
     pass
 
+def Training_AI(Hats, Amount_of_Nuts):
+    """This will be the function for training the trained AI"""
+    pass
 
        
 
 
  
-
-
- 
-
 
 Main()
