@@ -1,33 +1,22 @@
-def create_window():
-    """Function that will create the window the game will be played in"""
-    pass
+#Assignment 3 - A game of nuts - Kieran Wood
 
 def Set_Up_Initial_Variables():
-    """The function that asks all the initial questions to get the game started"""
-    Valid_input = False
+    """The function that asks for how many nuts you would like to initially start with"""
+    Valid_input = False #Variable to decide whther the input given is within range (1-100)
     while Valid_input == False:
         Amount_of_Nuts = (eval(input("How many nuts are there on the table initially (10-100)?")))
-        if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100):
+        if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100): #If the amount of nuts is in range
            print((('%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
            Valid_input = True
-        while Valid_input == False:
+        while Valid_input == False: #If the amount of nuts is not in range 
            Amount_of_Nuts = eval(input("Invalid amount chosen please select a value for the amount of nuts on the table initially (10-100):"))
-           if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100):
+           if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100): #if the input value after the first time it is wrong is correct
                print((('%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
                Valid_input = True
-           else:
+           else: #Should handle all other fringe cases
                Valid_input = False
     return Amount_of_Nuts
      
-def endgame_repeat():
-    repeat = eval(input("would You Like to play again? \n1 for Yes \n2 for no"))
-    if repeat == 1:
-        main()
-    else:
-        pass
-        
-
-
 
 def How_Many_Players(Amount_of_Nuts):
     """function that will give you an input option to choose if you want to play with one or two players"""
@@ -51,26 +40,61 @@ def How_Many_Players(Amount_of_Nuts):
             print("please select a valid option")
             selection = 0 
            
-    endgame_repeat()
+    
 
 def Player_vs_Player(Amount_of_Nuts,Players):
-    if Players == 1:
-        while Amount_of_Nuts != 0:
+    Win = endgame_repeat(Amount_of_Nuts)
+    if ((Players == 1) and (Win ==False)):
+        
+        while Win == False:
             Player_one_Turn = (eval(input("Player one; How many Nuts do you take (1-3)?:")))
-            Player_two_Turn = (eval(input("Player two; How many Nuts do you take (1-3)?:")))
-            
-            if (Player_one_Turn >=1) and (Player_one_Turn <= 3):
-               Amount_of_Nuts - Player_one_Turn
+            if ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):
+               Amount_of_Nuts = Amount_of_Nuts - Player_one_Turn
             if not ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):
                 while (Player_one_Turn < 1) or (Player_one_Turn > 3):
                     Player_one_Turn = (eval(input("Invalid selection, try again \nPlayer one; How many Nuts do you take (1-3)?:")))
 
-            Amount_of_Nuts - Player_two_Turn
+            print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+            endgame_repeat(Amount_of_Nuts)
+            
+            Player_two_Turn = (eval(input("Player two; How many Nuts do you take (1-3)?:")))
+            if ((Player_two_Turn >=1) and (Player_two_Turn <= 3)):
+               Amount_of_Nuts = Amount_of_Nuts - Player_two_Turn
+            if not ((Player_two_Turn >=1) and (Player_two_Turn <= 3)):
+                while (Player_two_Turn < 1) or (Player_two_Turn > 3):
+                    Player_two_Turn = (eval(input("Invalid selection, try again \nPlayer one; How many Nuts do you take (1-3)?:")))
+
+
+            print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+            endgame_repeat(Amount_of_Nuts)
+            
+    else:
         pass 
        
+def initHats(amountofnuts):
+    """will create a list with the same amount of hats as nuts"""
+    hats = []
+    for i in range(amountofnuts):
+        hats += [[1,1,1]]
+    print(hats)
 
 
+def endgame_repeat(Amount_of_Nuts):
+    if Amount_of_Nuts <= 0:
+        Win = True
+        repeat = eval(input("Would You Like to play again? \n1 for Yes 2, for No \nI choose:"))
+        if repeat == 1:
+            Main()
+        if repeat == 2:
+            print('Thanks For playing')
+            pass
 
+        else:
+            repeat = eval(input("Invalid Option Selected Please Choose one of the Below options: \nWould You Like to play again? \n1 for Yes 2, for No \nI choose:"))
+    else:
+        Win = False
+    return Win
+       
 
 def Main():
     """The main function that will get called to play the game"""
@@ -80,12 +104,6 @@ def Main():
     pass
  
 
-def initHats(amountofnuts):
-    """will create a list with the same amount of hats as nuts"""
-    hats = []
-    for i in range(amountofnuts):
-        hats += [[1,1,1]]
-    print(hats)
 
  
 
