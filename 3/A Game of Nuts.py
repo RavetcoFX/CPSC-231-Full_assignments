@@ -1,5 +1,7 @@
 #Assignment 3 - A game of nuts - Kieran Wood
 
+
+#Setting up the functions that will be used for each case of the game; Player vs Player, Player vs Untrained AI, Player vs Trained AI
 def Set_Up_Initial_Variables():
     """The function that asks for how many nuts you would like to initially start with"""
     Valid_input = False #Variable to decide whther the input given is within range (1-100)
@@ -15,9 +17,7 @@ def Set_Up_Initial_Variables():
                Valid_input = True
            else: #Should handle all other fringe cases
                Valid_input = False
-    return Amount_of_Nuts
-     
-
+    return Amount_of_Nuts     
 def How_Many_Players(Amount_of_Nuts):
     """function that will give you an input option to choose if you want to play with one or two players"""
     Players = eval(input("Options: \nPlay against a friend (1) \nPlay against an untrained computer (2) \nPlay against a trained AI (3) \nWhich Option do you take (1-3)?:"))
@@ -41,10 +41,33 @@ def How_Many_Players(Amount_of_Nuts):
             print("please select a valid option")
             selection = 0 
     pass
-           
+def endgame_repeat(Amount_of_Nuts):
+    if (Amount_of_Nuts <= 0):
+        Win = True
+        repeat = eval(input("Would You Like to play again? \n1 for Yes 2, for No \nI choose:"))
+        if repeat == 1:
+            Main()
+        if repeat == 2:
+            print('Thanks For playing')
+            return Win
+
+        else:
+            repeat = eval(input("Invalid Option Selected Please Choose one of the Below options: \nWould You Like to play again? \n1 for Yes 2, for No \nI choose:"))
+    else:
+        Win = False
+    return Win           
+def Main():
+    """The main function that will get called to play the game"""
+    print("Welcome to the game of nuts!")
     
+    How_Many_Players(Set_Up_Initial_Variables())
+    pass    
+
+#Function for Player vs Player
+
 
 def Player_vs_Player(Amount_of_Nuts,Players):
+    """This is the function that defines what should happen if the Player vs Player mode is selected"""
     Win = endgame_repeat(Amount_of_Nuts)
     if ((Players == 1) and (Win ==False)):
         Win = endgame_repeat(Amount_of_Nuts)
@@ -74,6 +97,8 @@ def Player_vs_Player(Amount_of_Nuts,Players):
             
     else:
         pass 
+
+
        
 def initHats(amountofnuts):
     """will create a list with the same amount of hats as nuts"""
@@ -83,29 +108,10 @@ def initHats(amountofnuts):
     print(hats)
 
 
-def endgame_repeat(Amount_of_Nuts):
-    if (Amount_of_Nuts <= 0):
-        Win = True
-        repeat = eval(input("Would You Like to play again? \n1 for Yes 2, for No \nI choose:"))
-        if repeat == 1:
-            Main()
-        if repeat == 2:
-            print('Thanks For playing')
-            return Win
 
-        else:
-            repeat = eval(input("Invalid Option Selected Please Choose one of the Below options: \nWould You Like to play again? \n1 for Yes 2, for No \nI choose:"))
-    else:
-        Win = False
-    return Win
        
 
-def Main():
-    """The main function that will get called to play the game"""
-    print("Welcome to the game of nuts!")
-    
-    How_Many_Players(Set_Up_Initial_Variables())
-    pass
+
  
 
 
