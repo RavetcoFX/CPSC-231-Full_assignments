@@ -154,7 +154,7 @@ def Player_vs_Player(Amount_of_Nuts,Players):
 #Functions for AI's
        
 def initHats(Amount_of_Nuts):
-    """will create a list with the same amount of hats as nuts"""
+    """Will create a list of lists (Hats) with the same amount of hats as nuts; to be used later to train the AI and to be used by the Probability_Selection"""
     Hats = []
     for i in range(Amount_of_Nuts):
         Hats += [[1,1,1]]
