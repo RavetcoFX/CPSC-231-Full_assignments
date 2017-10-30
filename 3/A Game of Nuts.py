@@ -8,14 +8,14 @@ def Set_Up_Initial_Variables():
     """The function that asks for how many nuts you would like to initially start with"""
     Valid_input = False #Variable to decide whther the input given is within range (1-100)
     while Valid_input == False:
-        Amount_of_Nuts = (eval(input("How many nuts are there on the table initially (10-100)?")))
+        Amount_of_Nuts = (eval(input("\nHow many nuts are there on the table initially (10-100)?")))
         if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100): #If the amount of nuts is in range
-           print((('%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
+           print((('\n%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
            Valid_input = True
         while Valid_input == False: #If the amount of nuts is not in range 
-           Amount_of_Nuts = eval(input("Invalid amount chosen please select a value for the amount of nuts on the table initially (10-100):"))
+           Amount_of_Nuts = eval(input("\nInvalid amount chosen please select a value for the amount of nuts on the table initially (10-100):"))
            if (10 <= Amount_of_Nuts) and (Amount_of_Nuts <= 100): #if the input value after the first time it is wrong is correct
-               print((('%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
+               print((('\n%d Nuts Selected, The game will begin counting down from: %d nuts' % (Amount_of_Nuts,Amount_of_Nuts))))
                Valid_input = True
            else: #Should handle all other fringe cases
                Valid_input = False
@@ -71,9 +71,9 @@ def endgame_repeat(Amount_of_Nuts,Turn_Number=0):
     if (Amount_of_Nuts <= 0): #If the last nut has been taken
         Win = True
         if not (Turn_Number % 2 == 0):
-                print("Player One Wins")
+                print("\nPlayer One Wins")
         if (Turn_Number % 2 == 0):
-            print("\nPlayer Two Wins")
+            print("\nPlayer Two/AI Wins")
         
         repeat = eval(input("\nWould You Like to play again? \n1 for Yes 2, for No \nI choose:"))
         if repeat == 1:
@@ -99,7 +99,13 @@ def endgame_repeat(Amount_of_Nuts,Turn_Number=0):
 def Main():
     """The main function that will get called to play the game"""
     print("Welcome to the game of nuts!")
-    
+    instructions = eval(input("\nWould you like to see the instructions? \n1 for Yes, 2 for No: "))
+    if instructions == 1:
+        print("\nThis is a game in which after selecting the initial amount of nuts for the game players will take turns removing nuts. \nThe objective of the game is to force your opponent to take the last nut on the table.\n ")
+    if instructions ==2:
+        pass
+    else:
+        pass
     How_Many_Players(Set_Up_Initial_Variables())
     pass    
 
@@ -158,7 +164,6 @@ def initHats(Amount_of_Nuts):
     Hats = []
     for i in range(Amount_of_Nuts):
         Hats += [[1,1,1]]
-    print(Hats)
     return Hats
 
 def Probability_Selection(Current_Nuts_Hat):
@@ -166,15 +171,17 @@ def Probability_Selection(Current_Nuts_Hat):
     # Current_Nuts_Hat is the Hats Value of the current Nut; by default this is [1,1,1]
     Total_Hat = Current_Nuts_Hat[0] + Current_Nuts_Hat[1] + Current_Nuts_Hat[2]
     r_int = random.randint(1, Total_Hat)
+    Picked_Value = [1,2,3]
     if (r_int <= Current_Nuts_Hat[0]):
         move = 0
     elif (r_int <= Current_Nuts_Hat[0] + Current_Nuts_Hat[1]):
         move = 1
     else:
         move = 2
+    
+    return Picked_Value[move]
     Decrement_Hats(Current_Nuts_Hat,move)
-    print(move)
-    print(Current_Nuts_Hat)
+    
     
     
 def Decrement_Hats(Current_Nuts_Hat, move, Win = False):
@@ -191,14 +198,83 @@ def Decrement_Hats(Current_Nuts_Hat, move, Win = False):
 
 def Untrrained_AI(Hats, Amount_of_Nuts):
     """Function for playing against an untrained AI"""
-    print("Hue I suck")
-    Probability_Selection(Hats[Amount_of_Nuts-1])
+    Turn_Number = 1 #is used to Let you Know what Turn number the Game is on for each players turn + is used by endgame_repeat to determine who won
+    Win = endgame_repeat(Amount_of_Nuts,Turn_Number)#Initially sets up the Win Variable
+
+    if Win ==False:#As long as the last nut has not been taken       
+        Win = endgame_repeat(Amount_of_Nuts,Turn_Number) #Updates Win Variable before Player One's Turn
+        while Win == False:
+            #Player One's Turn
+
+            print("\nTurn #: %d" %(Turn_Number)) #Lets you Know what Turn number the Game is on
+            Player_one_Turn = (eval(input("Player one; How many Nuts do you take (1-3)?:")))
+            if ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):
+               Amount_of_Nuts = Amount_of_Nuts - Player_one_Turn
+            if not ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):#If a value outside of the range is given (1-3)
+                while (Player_one_Turn < 1) or (Player_one_Turn > 3):
+                    Player_one_Turn = (eval(input("Invalid selection, try again \nPlayer one; How many Nuts do you take (1-3)?:")))
+
+             #This is everything that happens after player one's turn once a valid input has been provided during the turn
+            Turn_Number += 1
+            if Amount_of_Nuts !=0:
+                print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+            
+            #AI's Turn
+            Win = endgame_repeat(Amount_of_Nuts,Turn_Number) #Updating the Win Status before Player Two's Turn
+            if Win == False: #Player one will be invalidated because of the while loop but in between the turns, the win variable dosen't get checked unless this if statement is present
+                print("\nTurn #: %d" %(Turn_Number))#Lets you Know what Turn number the Game is on
+                Untrained_AI_Move = Probability_Selection(Hats[Amount_of_Nuts-1])
+                print("AI's Turn; How many Nuts do you take (1-3)?: %d" %(Untrained_AI_Move))
+                if ((Untrained_AI_Move >=1) and (Untrained_AI_Move <= 3)):
+                   Amount_of_Nuts = Amount_of_Nuts - Untrained_AI_Move
+
+                #This is everything that happens after player two's turn once a valid input has been provided during the turn
+                Turn_Number += 1
+                if Amount_of_Nuts >= 0:
+                    print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+                if Amount_of_Nuts <= 0:
+                    Win = endgame_repeat(Amount_of_Nuts,Turn_Number)   
     pass
 
 def Trained_AI(Hats, Amount_of_Nuts):
     """Function for playing against a Trained AI"""
+    Turn_Number = 1 #is used to Let you Know what Turn number the Game is on for each players turn + is used by endgame_repeat to determine who won
+    Win = endgame_repeat(Amount_of_Nuts,Turn_Number)#Initially sets up the Win Variable
+
+    if Win ==False:#As long as the last nut has not been taken       
+        Win = endgame_repeat(Amount_of_Nuts,Turn_Number) #Updates Win Variable before Player One's Turn
+        while Win == False:
+            #Player One's Turn
+
+            print("\nTurn #: %d" %(Turn_Number)) #Lets you Know what Turn number the Game is on
+            Player_one_Turn = (eval(input("Player one; How many Nuts do you take (1-3)?:")))
+            if ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):
+               Amount_of_Nuts = Amount_of_Nuts - Player_one_Turn
+            if not ((Player_one_Turn >=1) and (Player_one_Turn <= 3)):#If a value outside of the range is given (1-3)
+                while (Player_one_Turn < 1) or (Player_one_Turn > 3):
+                    Player_one_Turn = (eval(input("Invalid selection, try again \nPlayer one; How many Nuts do you take (1-3)?:")))
+
+             #This is everything that happens after player one's turn once a valid input has been provided during the turn
+            Turn_Number += 1
+            if Amount_of_Nuts !=0:
+                print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+            
+            #AI's Turn
+            Win = endgame_repeat(Amount_of_Nuts,Turn_Number) #Updating the Win Status before Player Two's Turn
+            if Win == False: #Player one will be invalidated because of the while loop but in between the turns, the win variable dosen't get checked unless this if statement is present
+                print("\nTurn #: %d" %(Turn_Number))#Lets you Know what Turn number the Game is on
+                Trained_AI_Move = Probability_Selection(Hats[Amount_of_Nuts-1])
+                print("AI's Turn; How many Nuts do you take (1-3)?: %d" %(Trained_AI_Move))
+                if ((Trained_AI_Move >=1) and (Trained_AI_Move <= 3)):
+                   Amount_of_Nuts = Amount_of_Nuts - Trained_AI_Move
+
+                #This is everything that happens after player two's turn once a valid input has been provided during the turn
+                Turn_Number += 1
+                if Amount_of_Nuts != 0:
+                    print("Amount of nuts remaining %d" %(Amount_of_Nuts))
+                if Amount_of_Nuts <= 0:
+                    Win = endgame_repeat(Amount_of_Nuts,Turn_Number)
     print("Hue I Win")
-    Probability_Selection(Hats[Amount_of_Nuts-1])
     pass
 
 def Training_AI(Hats, Amount_of_Nuts):
