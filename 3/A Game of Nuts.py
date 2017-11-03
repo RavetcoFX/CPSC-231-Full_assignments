@@ -128,8 +128,7 @@ def Main():
     How_Many_Players(Set_Up_Initial_Variables())
     pass    
 
-#Section 2: In this section I will be defining all the Functions for Player vs Player specific games
-    
+#Section 2: In this section I will be defining all the Functions for Player vs Player specific games   
 
 def Player_vs_Player(Amount_of_Nuts,Players):
     """This is the function that defines what should happen if the Player vs Player mode is selected"""
@@ -144,7 +143,6 @@ def Player_vs_Player(Amount_of_Nuts,Players):
             Win = endgame_repeat(Amount_of_Nuts,Turn_Number, 1) #Updates Win Variable before Player One's Turn
             Amount_of_Nuts = Player_Turn(Amount_of_Nuts,Turn_Number,Win)
             Turn_Number += 1         
-
 
 #Section 3: In this section I will be defining all the Functions for playing against and training the AI's
        
@@ -169,13 +167,14 @@ def Probability_Selection(Current_Nuts_Hat,Hats):
         move = 2
     Decrement_Hats(Current_Nuts_Hat, move, Hats)
     return Picked_Value[move]
-            
-    
+                
 def Decrement_Hats(Current_Nuts_Hat, move, Hats = 0, Win = False):
     """Function that decrements the value selected of the Hat until the game has been won or lost"""
+    print(Current_Nuts_Hat)
     Current_Nuts_Hat[move] = ((Current_Nuts_Hat[move]) - 1)
     #Hats[Current_Nuts_Hat][move] = (Hats[Current_Nuts_Hat][move] - 1)
     #if Win == True: #If the AI wins # not sure if I need this
+    print(Current_Nuts_Hat)
     return Current_Nuts_Hat[move]
 
 def AI_Turn(Hats, Amount_of_Nuts, Win, Seen = 1):
@@ -210,7 +209,6 @@ def Untrrained_AI(Hats, Amount_of_Nuts):
                 print("Amount of nuts remaining %d" %(Amount_of_Nuts))
             if Amount_of_Nuts <= 0:
                 Win = endgame_repeat(Amount_of_Nuts,Turn_Number, Players)   
-
 
 def Trained_AI(Hats, Amount_of_Nuts):
     """Function for playing against a Trained AI"""
@@ -251,4 +249,5 @@ def Training_AI(Hats, Amount_of_Nuts):
         Turn_Number += 1
         if Amount_of_Nuts <= 0:
             Win = endgame_repeat(Amount_of_Nuts,Turn_Number, Players)      
+
 Main()
