@@ -91,11 +91,18 @@ def endgame_repeat(Amount_of_Nuts,Turn_Number=0, Players = 0):
                 print("\nPlayer One Wins")
             if (Turn_Number % 2 == 0):
                 print("\nAi Wins")
-        if ((Players == 4) or (Players ==5)):
+        if (Players == 4):
             if not (Turn_Number % 2 == 0):
                 print("\nAI One Wins")
             if (Turn_Number % 2 == 0):
                 print("\nAi Two Wins")   
+        if Players == 5:
+            if not (Turn_Number % 2 == 0):
+                print("\nAI One Wins")
+                
+            if (Turn_Number % 2 == 0):
+                print("\nAi Two Wins")
+                
         if Players != 5:        
             repeat = eval(input("\nWould You Like to play again? \n1 for Yes \n2 for No: "))
             if repeat == 1:
@@ -151,7 +158,7 @@ def initHats(Amount_of_Nuts):
     """Will create a list of lists (Hats) with the same amount of hats as nuts; to be used later to train the AI and to be used by the Probability_Selection"""
     Hats = []
     for i in range(Amount_of_Nuts):
-        Hats += [[1,1,1]]
+        Hats += [[10,10,10]]
     return Hats
 
 def Probability_Selection(Current_Nuts_Hat,Hats):
@@ -172,11 +179,15 @@ def Probability_Selection(Current_Nuts_Hat,Hats):
 def Decrement_Hats(Current_Nuts_Hat, move, Hats = 0, Win = False):
     """Function that decrements the value selected of the Hat until the game has been won or lost"""
     #print(Current_Nuts_Hat)
-    Current_Nuts_Hat[move] = ((Current_Nuts_Hat[move]) - 1)
+    if Current_Nuts_Hat[move]!= 0:
+        Current_Nuts_Hat[move] = ((Current_Nuts_Hat[move]) - 1)
+    else:
+        return Hats
     #Hats[Current_Nuts_Hat][move] = (Hats[Current_Nuts_Hat][move] - 1)
+    #Hats = Hats
     #if Win == True: #If the AI wins # not sure if I need this
     #print(Current_Nuts_Hat)
-    return Current_Nuts_Hat[move]
+    return Hats
 
 def AI_Turn(Hats, Amount_of_Nuts, Win, Seen = 1):
     if Win == False: #Player one will be invalidated because of the while loop but in between the turns, the win variable dosen't get checked unless this if statement is present
@@ -240,8 +251,9 @@ def Training_AI():
     Turn_Number = 1 #is used to Let you Know what Turn number the Game is on for each Players turn + is used by endgame_repeat to determine who won
     Players = 5
     Win = endgame_repeat(Amount_of_Nuts,Turn_Number, Players)#Initially sets up the Win Variable
-    for i in range(10000):
-        Win = False
+    for i in range(10):
+        Amount_of_Nuts = 100
+        Win = endgame_repeat(Amount_of_Nuts,Turn_Number, Players)#Initially sets up the Win Variable
         while Win == False:
             #AI ones
             Win = endgame_repeat(Amount_of_Nuts,Turn_Number,Players)
@@ -253,6 +265,7 @@ def Training_AI():
             Turn_Number += 1
             if Amount_of_Nuts <= 0:
                 Win = endgame_repeat(Amount_of_Nuts,Turn_Number, Players)
+            
         
         
         
