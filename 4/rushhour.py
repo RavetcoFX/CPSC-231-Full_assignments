@@ -22,7 +22,7 @@ class Goal_Car:
 
 class Game:
     def Init_Grid(Goal_Car, Blockers):
-        """Creates the initial grid that the user will play from"""
+        """Creates the initial grid that the user will play from; needs to call place cars"""
         verticle = 6
         Horizontal = 6
         for i in range(verticle):#creates the verticle spacing using the horizontal elements created within the for loop
@@ -30,6 +30,15 @@ class Game:
             Base_Value = [[1]]
             Container_List += (Base_Value*Horizontal) #Creates the horizontal elements of the grid
             print(Container_List)
+    def Turn(Car, Row, Collum):
+        """The function that will define taking the turn"""
+        #move car to the row location
+        #move car to collum location
+        pass
+    def Place_cars(Car, Row , Collum):
+        """Will need to be able to place the cars in their initial locations reading from the file provided"""
+        pass
+
 
 print(Goal_Car.carnumber)
 Kyle = Goal_Car()
