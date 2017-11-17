@@ -20,6 +20,11 @@ class Goal_Car:
         Goal_Car.carnumber += 1
         self.display = [[self.carnumber]]
 
+    def current_row(self):
+        pass
+    def current_collum(self):
+        pass
+
     
 
 class Game:
@@ -31,6 +36,7 @@ class Game:
             Container_List = []
             Empty_Value = ' █ ' #The Value for empty space
             Container_List += (Empty_Value*Horizontal) #Creates the horizontal elements of the grid
+            Container_List += '\n'
             i=0
             result = ''
             for i in range (len(Container_List)):
@@ -47,11 +53,11 @@ class Game:
         pass
 
 
-print(Goal_Car.carnumber)
-Kyle = Goal_Car()
-jamie = Goal_Car()
+#print(Goal_Car.carnumber)
+#Kyle = Goal_Car()
+#jamie = Goal_Car()
 
-print(Kyle.carnumber, jamie.carnumber)
+#print(Kyle.carnumber, jamie.carnumber)
 
 Game.Init_Grid(None, None)
 
