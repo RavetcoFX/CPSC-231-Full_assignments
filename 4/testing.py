@@ -16,13 +16,17 @@ def Update_Grid(Goal_Car, Blockers):
     for i in range(0,verticle):#creates the verticle spacing using the horizontal elements created within the for loop
         goal_car_row = 2
         goal_car_collum = 2
-        
+        goal_car_orientation = ('h')
+
+
+
         count += 1 
-        Empty_Value = [' █ '] #The Value for empty space
+        Empty_Value = [[0]] #The Value for empty space
         Container_List.append(Empty_Value*Horizontal) #Creates the horizontal elements of the grid
-        Container_List.append(' ')
         #Container_List.append(str(i))
-    Container_List[goal_car_row-1][goal_car_collum-1] = 1
+    if goal_car_orientation == ('h'):
+        Container_List[goal_car_row-1][goal_car_collum-1] = 1
+        Container_List[goal_car_row-1][goal_car_collum-2] = 1
     print (Container_List)
     print("\n Grid version\n")
     return Container_List
