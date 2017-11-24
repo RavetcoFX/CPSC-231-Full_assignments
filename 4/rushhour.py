@@ -21,14 +21,13 @@ class Cars:
 
 class Game:
 
-    if game_started ==False:
-        Car_One = Cars()
-        Car_Two = Cars()
-        Car_Three = Cars()
-        Car_Four = Cars()
-        Car_Five = Cars()
-        Car_Six = Cars()
-        game_started = True
+    Car_One = Cars()
+    Car_Two = Cars()
+    Car_Three = Cars()
+    Car_Four = Cars()
+    Car_Five = Cars()
+    Car_Six = Cars()
+
 
     def Update_Grid(self):
         """Creates the initial grid that the user will play from; needs to call place cars"""
@@ -69,8 +68,6 @@ class Game:
         """Will need to be able to place the cars in their initial locations reading from the file provided"""
 
         pass
-
-Game.Turn(Car_One())
 
 
 print("Initial Count\n")
