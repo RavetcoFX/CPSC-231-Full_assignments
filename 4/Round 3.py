@@ -18,8 +18,6 @@ def Update_Grid(Goal_Car, Blockers):
         goal_car_collum = 2
         goal_car_orientation = ('h')
 
-
-
         count += 1 
         Empty_Value = [0] #The Value for empty space
         Container_List.append(Empty_Value*Horizontal) #Creates the horizontal elements of the grid
@@ -33,6 +31,7 @@ def Update_Grid(Goal_Car, Blockers):
 
 
 def Print_Grid(Grid):
+    """Function for cleaning up and printing the updated grid"""
     for j in (Grid):
         print (" ".join(j))
 
@@ -48,4 +47,4 @@ def Place_cars(Car, Row , Collum):
     pass
 
 
-Print_Grid(Update_Grid(None,None))
+Update_Grid(None,None)

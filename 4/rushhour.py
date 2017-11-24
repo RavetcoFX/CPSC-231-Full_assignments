@@ -1,65 +1,91 @@
 #assignment 4 - Kieran Wood
 
-class Blocker:
-    """This will be the class that defines the blockers/None-Goal Car"""
-    carnumber = 1
-    def __init__(self):
-        self.carnumber = carnumber
-        carnumber += 1
-    def __del__(self):
-        carnumber -= 1 
-        pass
-        
-    pass
-
-class Goal_Car:
+class Cars:
     """This is the class that will be the player/Goal Car"""
     carnumber = 1
     def __init__(self):
-        self.carnumber = Goal_Car.carnumber
-        Goal_Car.carnumber += 1
+        self.carnumber = Cars.carnumber
+        Cars.carnumber += 1
         self.display = [[self.carnumber]]
+    def Starting_Pos(self, Position, Orientation):
+        """Defines where the car will start from, gets called from the file reading function"""
+        self.x = Position[0]
+        self.y = Position[1]
+        self.Orientation = Orientation
+        return [self.x,self.y,self.Orientation]
 
-    def current_row(self):
-        pass
-    def current_collum(self):
-        pass
+    x = 0
+    y = 0
 
     
 
 class Game:
-    def Init_Grid(Goal_Car, Blockers):
+
+    if game_started ==False:
+        Car_One = Cars()
+        Car_Two = Cars()
+        Car_Three = Cars()
+        Car_Four = Cars()
+        Car_Five = Cars()
+        Car_Six = Cars()
+        game_started = True
+
+    def Update_Grid(self):
         """Creates the initial grid that the user will play from; needs to call place cars"""
         verticle = 6
         Horizontal = 6
-        for i in range(verticle):#creates the verticle spacing using the horizontal elements created within the for loop
-            Container_List = []
-            Empty_Value = ' █ ' #The Value for empty space
-            Container_List += (Empty_Value*Horizontal) #Creates the horizontal elements of the grid
-            Container_List += '\n'
-            i=0
-            result = ''
-            for i in range (len(Container_List)):
-                result += (Container_List[i])
-                
-            print (result)
-    def Turn(Car, Row, Collum):
+        count = 0
+        Container_List = []
+        for i in range(0,verticle):#creates the verticle spacing using the horizontal elements created within the for loop
+            Car_row = 2
+            Car_collum = 2
+            Car_orientation = ('h')
+
+
+
+            count += 1 
+            Empty_Value = [0] #The Value for empty space
+            Container_List.append(Empty_Value*Horizontal) #Creates the horizontal elements of the grid
+            #Container_List.append(str(i))
+        if Car_orientation == ('h'):
+            Container_List[Car_row-1][Car_collum-1] = 1
+            Container_List[Car_row-1][Car_collum-2] = 1
+        print (Container_List)
+        print("\n Grid version\n")
+        return Container_List
+
+    def Turn(Car):
         """The function that will define taking the turn"""
+        [Car_Number, New_Collum, New_Row] = eval(input("Please select a Car Number, The collum you would like to move the car to, and the row you would like to move the car to: "))
+        Car.self.x = New_Row
+        print(Car.self.x)
+        print (Car_Number)
+        print (New_Collum)
+        print (New_Row)
         #move car to the row location
         #move car to collum location
         pass
     def Place_cars(Car, Row , Collum):
         """Will need to be able to place the cars in their initial locations reading from the file provided"""
+
         pass
 
+Game.Turn(Car_One())
 
-#print(Goal_Car.carnumber)
-#Kyle = Goal_Car()
-#jamie = Goal_Car()
 
-#print(Kyle.carnumber, jamie.carnumber)
+print("Initial Count\n")
+print(Cars.carnumber)
+print('Cars:\n')
+print(Game.Car_One.carnumber)
+print(Game.Car_Two.carnumber)
+print(Game.Car_Three.carnumber)
+print(Game.Car_Four.carnumber)
+print(Game.Car_Five.carnumber)
+print(Game.Car_Six.carnumber)
+print("Final Count\n")
+print(Cars.carnumber)
+Game.Update_Grid(None)
 
-Game.Init_Grid(None, None)
 
 import sys
 
