@@ -76,8 +76,8 @@ class Game:
         current_car = Game.car_dict['car_%i' %(car_num)]
         
         for i in range(0,vertical):#creates the verticle spacing using the horizontal elements created within the for loop
-            Car_row = (current_car.get_x() -1)
-            Car_collum = (current_car.get_y() -1)
+            Car_row = current_car.get_x() - 1
+            Car_collum = current_car.get_y() - 1
             Car_orientation = ('v')
             Empty_Value = [0] #The Value for empty space
             Container_List.append(Empty_Value*horizontal) #Creates the horizontal elements of the grid
