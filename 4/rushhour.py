@@ -1,6 +1,7 @@
 #assignment 4 - Kieran Wood
 import sys
 
+
 class Cars:
     """This class contains all the attributes for each car instance"""
     carnumber = 1
@@ -13,10 +14,12 @@ class Cars:
         self.x = 0 # Initially comes from source game file
         self.y = 0 # Initially comes from source game file
         self.Orientation = input("What is the orientation of carnumber %i (h or v): " %(self.carnumber)) # Initially comes from source game file
+        self.carsize = eval(input("what is the carsize?:"))
 
+    def get_carsize(self):
+       return self.carsize
     def get_x(self):
         return self.x
-    
     def get_y(self):
         return self.y
 
@@ -76,20 +79,21 @@ class Game:
                 Car_orientation = current_car.get_orientation()
                 Empty_Value = [0] #The Value for empty space
                 Container_List.append(Empty_Value*horizontal) #Creates the horizontal elements of the grid
-            if 'h' == Cars_Orientation:
-                if (current_car.get_y() == 1):
-                    print("Please make a valid selection:\n")
-                    Game.Turn()
-                else:
+            if current_car.get_carsize() == 2:
+                if 'h' == Cars_Orientation:
+                    if (current_car.get_y() == 1):
+                        print("Please make a valid selection:\n")
+                        Game.Turn()
+                    else:
+                        Container_List[Car_row][Car_collum] = current_car.carnumber 
+                        Container_List[Car_row][Car_collum-1] = current_car.carnumber 
+                if 'v' == Cars_Orientation:
+                    #if (current_car.get_x() == 1):
+                    #    print("Please make a valid selection:\n")
+                    #    Game.Turn()
                     Container_List[Car_row][Car_collum] = current_car.carnumber 
-                    Container_List[Car_row][Car_collum-1] = current_car.carnumber 
-            if 'v' == Cars_Orientation:
-                #if (current_car.get_x() == 1):
-                #    print("Please make a valid selection:\n")
-                #    Game.Turn()
-                Container_List[Car_row][Car_collum] = current_car.carnumber 
-                Container_List[Car_row-1][Car_collum] = current_car.carnumber 
-            
+                    Container_List[Car_row-1][Car_collum] = current_car.carnumber 
+                
             print (Container_List)
             print("\n Grid version\n")
             return Container_List
@@ -102,10 +106,38 @@ class Game:
         else:
             return False
 
-
-
-
-
+    def File_input():
+        if len (sys.argv) == 2:
+            input_file = open(sys.argv[1])
+            line = input_file.readline()
+            count = 1
+            data = []
+            while line:
+                   print("Line {}: {}".format(count, line.strip()))      
+                   data += [[line.strip()[0],line.strip()[3], line.strip()[6], line.strip()[9]]]
+                   #data += line.strip()[3]
+                   #data += line.strip()[6]
+                   #data += line.strip()[9]
+                   line = input_file.readline()
+                   count += 1
+            print(data)
+            n = 0
+            q = 1
+            v = 2
+            b = 3
+            print('There are: %i cars in this puzzle\n' %len(data))
+            for c in range(count-1):
+                car_orientation = data[c][n]
+                car_size = data[c][q]
+                car_x = data[c][v]
+                car_y = data[c][b]
+                print ('\ncar info is:\norientation %s \ncar number %i \ncar x pos: %i \ncar y pos: %i' %(car_orientation, int(car_size),int(car_x), int(car_y)))
+            
+        elif len (sys.argv) != 2:
+            print("error plz try again")
+            sys.exit()
+    
+    
 if __name__ == '__main__':
     if len (sys.argv) != 2:
         Game.Game_loop()
