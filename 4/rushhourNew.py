@@ -36,23 +36,23 @@ class Game:
     car_value = 6
     car_dict = {}
          
-    for i in range(1,(car_value+1)):#Creates the right amount of instances based on line numbers in text file
+    for i in range(car_value):#Creates the right amount of instances based on line numbers in text file
         car_dict['car_%i' %(i)] = Cars()
 
-    print(car_dict['car_1'].carnumber)
+    print(car_dict['car_0'].carnumber)
     def Game_loop():
         """What will keep the game running until it is over"""
         Gui_ver = False
         if Gui_ver == False:
-            Game.Update_Grid(1)
+            Game.Update_Grid(0)
             while (Gui_ver == False and Game.Game_over() ==False):
                 Game.Turn()
             
 
     def Turn():
         """The function that will define taking the turn"""
-        [number, row_x, collumn_y] = eval(input("Please select a Car Number, The Row you would like to move the car to, and the Collumn  you would like to move the car to:"))
-        current_car = Game.car_dict['car_%i' %(number)]
+        [number, collumn_y, row_x] = eval(input("Please select a Car Number, The collum you would like to move the car to, and the row you would like to move the car to:"))
+        current_car = Game.car_dict['car_%i' %(number-1)]
         print("car selected's orientation is: %s \n" %(current_car.get_orientation()))
         current_car.set_y(collumn_y)
         current_car.set_x(row_x)
@@ -68,7 +68,6 @@ class Game:
 
             Container_List = []
             current_car = Game.car_dict['car_%i' %(car_num)]
-            Cars_Orientation = current_car.get_orientation()
             print(current_car.carnumber)
             for i in range(0,vertical):#creates the verticle spacing using the horizontal elements created within the for loop
                 Car_row = current_car.get_x() - 1
@@ -76,27 +75,19 @@ class Game:
                 Car_orientation = current_car.get_orientation()
                 Empty_Value = [0] #The Value for empty space
                 Container_List.append(Empty_Value*horizontal) #Creates the horizontal elements of the grid
-            if 'h' == Cars_Orientation:
-                if (current_car.get_y() == 1):
-                    print("Please make a valid selection:\n")
-                    Game.Turn()
-                else:
-                    Container_List[Car_row][Car_collum] = current_car.carnumber 
-                    Container_List[Car_row][Car_collum-1] = current_car.carnumber 
-            if 'v' == Cars_Orientation:
-                #if (current_car.get_x() == 1):
-                #    print("Please make a valid selection:\n")
-                #    Game.Turn()
-                Container_List[Car_row][Car_collum] = current_car.carnumber 
-                Container_List[Car_row-1][Car_collum] = current_car.carnumber 
-            
+            if 'v' == current_car.get_orientation:
+                Container_List[Car_row][Car_collum] = current_car.carnumber - 1
+                #Container_List[Car_row][Car_collum-1] = current_car.carnumber - 1
+            if 'h' == current_car.get_orientation:
+                Container_List[Car_row][Car_collum] = current_car.carnumber - 1
+                Container_List[Car_row+1][Car_collum] = current_car.carnumber - 1
             print (Container_List)
             print("\n Grid version\n")
             return Container_List
         else:
             pass
     def Game_over():
-        Goal_car = Game.car_dict['car_1']
+        Goal_car = Game.car_dict['car_0']
         if (Goal_car.get_pos() == (2,5)):
             return True
         else:
