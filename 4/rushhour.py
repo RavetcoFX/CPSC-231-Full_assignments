@@ -14,7 +14,8 @@ class Cars:
         self.x = 0 # Initially comes from source game file
         self.y = 0 # Initially comes from source game file
         self.Orientation = input("What is the orientation of carnumber %i (h or v): " %(self.carnumber)) # Initially comes from source game file
-        self.carsize = eval(input("what is the carsize?:"))
+        #self.carsize = eval(input("what is the carsize?:"))
+        self.carsize = 2
 
     def get_carsize(self):
        return self.carsize
@@ -36,7 +37,7 @@ class Cars:
 
 
 class Game:
-    car_value = 6
+    car_value = 6 # needs to be equal to the length of the lines of the text file
     car_dict = {}
          
     for i in range(1,(car_value+1)):#Creates the right amount of instances based on line numbers in text file
@@ -57,6 +58,7 @@ class Game:
         [number, row_x, collumn_y] = eval(input("Please select a Car Number, The Row you would like to move the car to, and the Collumn  you would like to move the car to:"))
         current_car = Game.car_dict['car_%i' %(number)]
         print("car selected's orientation is: %s \n" %(current_car.get_orientation()))
+        print("car selected's size is: %s \n" %(current_car.get_carsize()))
         current_car.set_y(collumn_y)
         current_car.set_x(row_x)
         print("Car #%i new positon is: X=%i Y=%i" %(number, current_car.get_x(), current_car.get_y()))
@@ -101,7 +103,8 @@ class Game:
             pass
     def Game_over():
         Goal_car = Game.car_dict['car_1']
-        if (Goal_car.get_pos() == (2,5)):
+        if (Goal_car.get_pos() == (2,6)):
+            print("\nwould you look at that thats the ending all right, good job, keep up the nice work lad, you got a career ahead of you")
             return True
         else:
             return False
