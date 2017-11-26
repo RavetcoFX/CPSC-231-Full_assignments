@@ -16,6 +16,7 @@ class Cars:
         self.Orientation = input("What is the orientation of carnumber %i (h or v): " %(self.carnumber)) # Initially comes from source game file
         #self.carsize = eval(input("what is the carsize?:"))
         self.carsize = 2
+         
 
     def get_carsize(self):
        return self.carsize
@@ -37,18 +38,23 @@ class Cars:
 
 
 class Game:
-    car_value = 6 # needs to be equal to the length of the lines of the text file
+    #car_value = 6 # needs to be equal to the length of the lines of the text file
     car_dict = {}
+    car_value = []
          
     for i in range(1,(car_value+1)):#Creates the right amount of instances based on line numbers in text file
         car_dict['car_%i' %(i)] = Cars()
 
     print(car_dict['car_1'].carnumber)
+    def Startup():
+        Game.File_input() 
+        Game.Game_loop() 
+
     def Game_loop():
         """What will keep the game running until it is over"""
         Gui_ver = False
         if Gui_ver == False:
-            Game.Update_Grid(1)
+            Game.Update_Grid()
             while (Gui_ver == False and Game.Game_over() ==False):
                 Game.Turn()
             
@@ -64,14 +70,22 @@ class Game:
         print("Car #%i new positon is: X=%i Y=%i" %(number, current_car.get_x(), current_car.get_y()))
         Game.Update_Grid(number)
 
-    def Update_Grid(car_num):
+    def Update_Grid(car_num = None):
         """Creates the initial grid that the user will play from; needs to call place cars"""
+        vertical = 6
+        horizontal = 6
+        Container_List = []
         Game_over = Game.Game_over()
-        if Game_over ==False:
-            vertical = 6
-            horizontal = 6
+        if car_num ==None:
+            for i in range(0,vertical):#creates the verticle spacing using the horizontal elements created within the for loop
+                Empty_Value = [0] #The Value for empty space
+                Container_List.append(Empty_Value*horizontal) #Creates the horizontal elements of the grid
+                print (Container_List)
+                print("\n Grid version\n")
+                return Container_List
 
-            Container_List = []
+        if (Game_over ==False and car_num!=None):
+
             current_car = Game.car_dict['car_%i' %(car_num)]
             Cars_Orientation = current_car.get_orientation()
             print(current_car.carnumber)
@@ -97,7 +111,6 @@ class Game:
                     Container_List[Car_row-1][Car_collum] = current_car.carnumber 
                 
             print (Container_List)
-            print("\n Grid version\n")
             return Container_List
         else:
             pass
@@ -123,26 +136,29 @@ class Game:
                    #data += line.strip()[9]
                    line = input_file.readline()
                    count += 1
+            print("\nFull data list from file:")
             print(data)
-            n = 0
-            q = 1
-            v = 2
-            b = 3
+            print('')
+            n = 0 #index where the relevant information is found in the data list; used in the next for loop
+            q = 1 #index where the relevant information is found in the data list; used in the next for loop
+            v = 2 #index where the relevant information is found in the data list; used in the next for loop
+            b = 3 #index where the relevant information is found in the data list; used in the next for loop
             print('There are: %i cars in this puzzle\n' %len(data))
+            Game.Count = count
             for c in range(count-1):
                 car_orientation = data[c][n]
                 car_size = data[c][q]
                 car_x = data[c][v]
                 car_y = data[c][b]
                 print ('\ncar info is:\norientation %s \ncar number %i \ncar x pos: %i \ncar y pos: %i' %(car_orientation, int(car_size),int(car_x), int(car_y)))
+        return [car_orientation,car_size,car_x,car_y]
             
-        elif len (sys.argv) != 2:
-            print("error plz try again")
-            sys.exit()
-    
-    
-if __name__ == '__main__':
-    if len (sys.argv) != 2:
-        Game.Game_loop()
-        #sys.stderr.write()
-        sys.exit()
+
+Game.Startup()
+
+if len (sys.argv) != 2:
+    print("error plz try again")
+    sys.exit()
+
+
+   
