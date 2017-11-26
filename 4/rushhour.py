@@ -20,8 +20,10 @@ class Cars:
 
     def get_carsize(self):
        return self.carsize
+       
     def get_x(self):
         return self.x
+        
     def get_y(self):
         return self.y
 
@@ -40,7 +42,7 @@ class Cars:
 class Game:
     #car_value = 6 # needs to be equal to the length of the lines of the text file
     car_dict = {}
-    car_value = []
+    car_value = 6
          
     for i in range(1,(car_value+1)):#Creates the right amount of instances based on line numbers in text file
         car_dict['car_%i' %(i)] = Cars()
@@ -61,7 +63,11 @@ class Game:
 
     def Turn():
         """The function that will define taking the turn"""
-        [number, row_x, collumn_y] = eval(input("Please select a Car Number, The Row you would like to move the car to, and the Collumn  you would like to move the car to:"))
+        user_input = input("Please select a Car Number, The row you would like to move the car to, and the column you would like to move the car to [x,x,x]:\n")
+        if "exit" in user_input:
+            sys.exit()
+        else:
+            [number, row_x, collumn_y] = eval(user_input)
         current_car = Game.car_dict['car_%i' %(number)]
         print("car selected's orientation is: %s \n" %(current_car.get_orientation()))
         print("car selected's size is: %s \n" %(current_car.get_carsize()))
@@ -104,9 +110,9 @@ class Game:
                         Container_List[Car_row][Car_collum] = current_car.carnumber 
                         Container_List[Car_row][Car_collum-1] = current_car.carnumber 
                 if 'v' == Cars_Orientation:
-                    #if (current_car.get_x() == 1):
-                    #    print("Please make a valid selection:\n")
-                    #    Game.Turn()
+                    if (current_car.get_x() == 1):
+                        print("Please make a valid selection, can't have 1 as the vale for row:\n")
+                        Game.Turn()
                     Container_List[Car_row][Car_collum] = current_car.carnumber 
                     Container_List[Car_row-1][Car_collum] = current_car.carnumber 
                 
@@ -151,7 +157,7 @@ class Game:
                 car_x = data[c][v]
                 car_y = data[c][b]
                 print ('\ncar info is:\norientation %s \ncar number %i \ncar x pos: %i \ncar y pos: %i' %(car_orientation, int(car_size),int(car_x), int(car_y)))
-        return [car_orientation,car_size,car_x,car_y]
+            return [car_orientation,car_size,car_x,car_y]
             
 
 Game.Startup()
